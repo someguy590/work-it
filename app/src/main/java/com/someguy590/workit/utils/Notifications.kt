@@ -7,7 +7,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 
-val CHANNEL_ID = "0"
+const val CHANNEL_ID = "0"
 fun Context.createNotificationChannel() {
     val name = "WORK_IT"
     val description = "General Work It notifications"
