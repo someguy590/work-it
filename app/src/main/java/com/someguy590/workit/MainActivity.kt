@@ -12,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.someguy590.workit.ui.theme.WorkItTheme
+import com.someguy590.workit.utils.createNotificationChannel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
+
         enableEdgeToEdge()
         setContent {
             WorkItTheme {
