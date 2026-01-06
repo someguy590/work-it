@@ -1,7 +1,5 @@
 package com.someguy590.workit
 
-import android.app.Notification
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,12 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.someguy590.workit.ui.theme.WorkItTheme
-import com.someguy590.workit.utils.CHANNEL_ID
+import com.someguy590.workit.utils.createNotification
 import com.someguy590.workit.utils.createNotificationChannel
-import java.util.UUID
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,15 +40,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-private fun Context.createNotification(): Notification {
-    return NotificationCompat.Builder(this, CHANNEL_ID)
-        .setSmallIcon(R.drawable.outline_adb_24)
-        .setContentTitle("Title ${UUID.randomUUID()}")
-        .setContentText("Content ${UUID.randomUUID()}")
-        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        .build()
 }
 
 @Composable
