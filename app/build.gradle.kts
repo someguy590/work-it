@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -55,6 +56,14 @@ ksp {
     arg("KOIN_CONFIG_CHECK", "true")
 }
 
+sqldelight {
+    databases {
+        create("DB") {
+            packageName = "com.someguy590.workit"
+        }
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -83,6 +92,8 @@ dependencies {
     ksp(libs.koin.ksp.compiler)
     testImplementation(libs.koin.test.junit4)
     testImplementation(libs.koin.android.test)
+
+    implementation(libs.sqldelight.android.driver)
 
 //    testing dependencies
     testImplementation(libs.junit)
