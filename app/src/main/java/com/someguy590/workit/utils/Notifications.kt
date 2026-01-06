@@ -13,6 +13,7 @@ fun Context.createNotificationChannel() {
     val channel = NotificationChannelCompat.Builder(CHANNEL_ID, importance)
         .setName(name)
         .setDescription(description)
+        .setVibrationEnabled(true)
         .build()
     // Register the channel with the system. You can't change the importance
     // or other notification behaviors after this.
