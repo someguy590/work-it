@@ -1,0 +1,17 @@
+CREATE TABLE Workout (
+id INTEGER PRIMARY KEY,
+name TEXT NOT NULL,
+weight REAL NOT NULL
+);
+
+insert:
+INSERT INTO Workout(name, weight) VALUES (?, ?);
+
+selectAll:
+SELECT * FROM Workout;
+
+update:
+UPDATE Workout SET name = ?, weight = ? WHERE id = ?;
+
+delete:
+DELETE FROM Workout WHERE id = ?;
