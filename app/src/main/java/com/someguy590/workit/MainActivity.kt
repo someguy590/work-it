@@ -13,9 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.app.NotificationManagerCompat
 import com.someguy590.workit.ui.theme.WorkItTheme
-import com.someguy590.workit.utils.createNotification
+import com.someguy590.workit.ui.workout.WorkoutScreen
 import com.someguy590.workit.utils.createNotificationChannel
 
 class MainActivity : ComponentActivity() {
@@ -27,15 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WorkItTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        {
-                            NotificationManagerCompat
-                                .from(this)
-                                .notify(0, createNotification())
-                        },
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    WorkoutScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
