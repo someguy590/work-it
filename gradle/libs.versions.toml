@@ -52,6 +52,7 @@ koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compos
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinAnnotations" }
 koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinAnnotations" }
 sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
 
 # testing dependencies
 junit = { group = "junit", name = "junit", version.ref = "junit" }

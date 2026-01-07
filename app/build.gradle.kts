@@ -94,6 +94,7 @@ dependencies {
     testImplementation(libs.koin.android.test)
 
     implementation(libs.sqldelight.android.driver)
+    implementation(libs.sqldelight.coroutines.extensions)
 
 //    testing dependencies
     testImplementation(libs.junit)
