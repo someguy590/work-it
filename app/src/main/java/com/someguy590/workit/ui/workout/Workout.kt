@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.someguy590.workit.ui.theme.WorkItTheme
 import org.koin.androidx.compose.koinViewModel
@@ -66,10 +67,10 @@ private fun WorkoutContent(
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun WorkoutScreenPreview() {
+private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::class) workoutState: WorkoutState) {
     WorkItTheme {
         Scaffold {
-            WorkoutContent(WorkoutState(), {})
+            WorkoutContent(workoutState, {})
         }
     }
 }
