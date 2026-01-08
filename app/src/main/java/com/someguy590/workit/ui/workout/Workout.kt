@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.IconButton
@@ -43,14 +45,20 @@ private fun WorkoutContent(
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         items(workoutState.workouts, { it.id }) {
-            Row {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text("Name:")
                 OutlinedTextField(it.name, {})
             }
-            Row {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text("Weight:")
                 OutlinedTextField(it.weight.toString(), {})
             }
@@ -69,8 +77,12 @@ private fun WorkoutContent(
 @Composable
 private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::class) workoutState: WorkoutState) {
     WorkItTheme {
-        Scaffold {
-            WorkoutContent(workoutState, {})
+        Scaffold { innerPadding ->
+            WorkoutContent(
+                workoutState,
+                {},
+                Modifier.padding(innerPadding)
+            )
         }
     }
 }
