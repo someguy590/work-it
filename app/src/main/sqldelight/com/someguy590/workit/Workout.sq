@@ -15,3 +15,6 @@ UPDATE Workout SET name = ?, weight = ? WHERE id = ?;
 
 delete:
 DELETE FROM Workout WHERE id = ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid();
