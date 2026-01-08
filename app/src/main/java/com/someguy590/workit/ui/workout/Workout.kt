@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -35,6 +35,7 @@ fun WorkoutScreen(
     WorkoutContent(
         workoutState,
         workoutViewModel::addWorkout,
+        workoutViewModel::editWorkout,
         modifier
     )
 }
@@ -43,6 +44,7 @@ fun WorkoutScreen(
 private fun WorkoutContent(
     workoutState: WorkoutState,
     handleAddWorkout: () -> Unit,
+    handleEditWorkout: (Int, Long, String, Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -50,13 +52,16 @@ private fun WorkoutContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
-        items(workoutState.workouts, { it.id }) {
+        itemsIndexed(workoutState.workouts, { i, workout -> workout.id }) { i, workout ->
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Name:")
-                OutlinedTextField(it.name, {})
+                OutlinedTextField(
+                    workout.name,
+                    { handleEditWorkout(i, workout.id, it, workout.weight) }
+                )
             }
             Spacer(modifier = Modifier.size(8.dp))
             Row(
@@ -64,7 +69,10 @@ private fun WorkoutContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Weight:")
-                OutlinedTextField(it.weight.toString(), {})
+                OutlinedTextField(
+                    workout.weight.toString(),
+                    { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
+                )
             }
         }
         item {
@@ -85,6 +93,7 @@ private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::clas
             WorkoutContent(
                 workoutState,
                 {},
+                { _, _, _, _ -> },
                 Modifier.padding(innerPadding)
             )
         }
