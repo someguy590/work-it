@@ -18,12 +18,9 @@ class WorkoutViewModel(private val db: DB) : ViewModel() {
     val workoutUIState = workoutState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            db.workoutQueries.selectAll().asFlow().mapToList(Dispatchers.IO).collect {
-                workouts ->
-                workoutState.update {
-                    it.copy(workouts = workouts)
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            workoutState.update {
+                it.copy(workouts = db.workoutQueries.selectAll().executeAsList())
             }
         }
     }
