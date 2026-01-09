@@ -51,7 +51,7 @@ fun WorkoutScreen(
 private fun WorkoutContent(
     workoutState: WorkoutState,
     handleAddWorkout: () -> Unit,
-    handleEditWorkout: (Int, Long, String, Double) -> Unit,
+    handleEditWorkout: (Int, Long, String, Double, Long) -> Unit,
     handleToggleEditMode: () -> Unit,
     handleDeleteWorkout: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -87,7 +87,7 @@ private fun WorkoutContent(
                             Text("Name:")
                             OutlinedTextField(
                                 workout.name,
-                                { handleEditWorkout(i, workout.id, it, workout.weight) }
+                                { handleEditWorkout(i, workout.id, it, workout.weight, workout.reps) }
                             )
                         }
                         Row(
@@ -97,7 +97,7 @@ private fun WorkoutContent(
                             Text("Weight:")
                             OutlinedTextField(
                                 workout.weight.toString(),
-                                { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
+                                { handleEditWorkout(i, workout.id, workout.name, it.toDouble(), workout.reps) }
                             )
                         }
                     }
@@ -122,7 +122,7 @@ private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::clas
             WorkoutContent(
                 workoutState,
                 {},
-                { _, _, _, _ -> },
+                { _, _, _, _, _ -> },
                 {},
                 {},
                 Modifier.padding(innerPadding)
