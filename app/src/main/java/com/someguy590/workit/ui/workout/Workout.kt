@@ -2,6 +2,7 @@ package com.someguy590.workit.ui.workout
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,10 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.someguy590.workit.R
 import com.someguy590.workit.ui.theme.WorkItTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,6 +43,7 @@ fun WorkoutScreen(
         workoutState,
         workoutViewModel::addWorkout,
         workoutViewModel::editWorkout,
+        workoutViewModel::toggleEditMode,
         modifier
     )
 }
@@ -47,6 +53,7 @@ private fun WorkoutContent(
     workoutState: WorkoutState,
     handleAddWorkout: () -> Unit,
     handleEditWorkout: (Int, Long, String, Double) -> Unit,
+    handleToggleEditMode: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -55,41 +62,44 @@ private fun WorkoutContent(
         modifier = modifier.fillMaxSize()
     ) {
         itemsIndexed(workoutState.workouts, { i, workout -> workout.id }) { i, workout ->
-            OutlinedCard {
-                Column(modifier = Modifier.padding(8.dp)) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("Name:")
-                        OutlinedTextField(
-                            workout.name,
-                            { handleEditWorkout(i, workout.id, it, workout.weight) }
-                        )
-                    }
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("Weight:")
-                        OutlinedTextField(
-                            workout.weight.toString(),
-                            { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.size(8.dp))
             Row(
-                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Weight:")
-                OutlinedTextField(
-                    workout.weight.toString(),
-                    { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
-                )
+                if (workoutState.isInEditMode) {
+                    OutlinedIconButton({}) {
+                        Icon(painterResource(R.drawable.close_24px), "Delete workout")
+                    }
+                }
+                OutlinedCard(
+                    modifier = Modifier.combinedClickable(
+                        onLongClick = handleToggleEditMode,
+                        onClick = {}
+                    )
+                ) {
+                    Column(modifier = Modifier.padding(8.dp)) {
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Name:")
+                            OutlinedTextField(
+                                workout.name,
+                                { handleEditWorkout(i, workout.id, it, workout.weight) }
+                            )
+                        }
+                        Spacer(modifier = Modifier.size(8.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Weight:")
+                            OutlinedTextField(
+                                workout.weight.toString(),
+                                { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
+                            )
+                        }
+                    }
+                }
             }
         }
         item {
@@ -111,6 +121,7 @@ private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::clas
                 workoutState,
                 {},
                 { _, _, _, _ -> },
+                {},
                 Modifier.padding(innerPadding)
             )
         }
