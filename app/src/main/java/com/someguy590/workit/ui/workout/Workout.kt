@@ -3,6 +3,7 @@ package com.someguy590.workit.ui.workout
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -53,15 +55,30 @@ private fun WorkoutContent(
         modifier = modifier.fillMaxSize()
     ) {
         itemsIndexed(workoutState.workouts, { i, workout -> workout.id }) { i, workout ->
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Name:")
-                OutlinedTextField(
-                    workout.name,
-                    { handleEditWorkout(i, workout.id, it, workout.weight) }
-                )
+            OutlinedCard {
+                Column(modifier = Modifier.padding(8.dp)) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Name:")
+                        OutlinedTextField(
+                            workout.name,
+                            { handleEditWorkout(i, workout.id, it, workout.weight) }
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Weight:")
+                        OutlinedTextField(
+                            workout.weight.toString(),
+                            { handleEditWorkout(i, workout.id, workout.name, it.toDouble()) }
+                        )
+                    }
+                }
             }
             Spacer(modifier = Modifier.size(8.dp))
             Row(
