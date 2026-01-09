@@ -44,6 +44,7 @@ fun WorkoutScreen(
         workoutViewModel::addWorkout,
         workoutViewModel::editWorkout,
         workoutViewModel::toggleEditMode,
+        workoutViewModel::deleteWorkout,
         modifier
     )
 }
@@ -54,6 +55,7 @@ private fun WorkoutContent(
     handleAddWorkout: () -> Unit,
     handleEditWorkout: (Int, Long, String, Double) -> Unit,
     handleToggleEditMode: () -> Unit,
+    handleDeleteWorkout: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -66,7 +68,7 @@ private fun WorkoutContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (workoutState.isInEditMode) {
-                    OutlinedIconButton({}) {
+                    OutlinedIconButton({ handleDeleteWorkout(i) }) {
                         Icon(painterResource(R.drawable.close_24px), "Delete workout")
                     }
                 }
@@ -121,6 +123,7 @@ private fun WorkoutScreenPreview(@PreviewParameter(WorkoutPreviewParameter::clas
                 workoutState,
                 {},
                 { _, _, _, _ -> },
+                {},
                 {},
                 Modifier.padding(innerPadding)
             )

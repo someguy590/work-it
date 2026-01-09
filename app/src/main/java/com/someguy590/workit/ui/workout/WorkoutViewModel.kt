@@ -51,4 +51,14 @@ class WorkoutViewModel(private val db: DB) : ViewModel() {
     fun toggleEditMode() {
         workoutState.update { it.copy(isInEditMode = !it.isInEditMode) }
     }
+
+    fun deleteWorkout(i: Int) {
+        workoutState.update {
+            val workout = it.workouts[i]
+            viewModelScope.launch(Dispatchers.IO) {
+                db.workoutQueries.delete(workout.id)
+            }
+            it.copy(workouts = it.workouts - workout)
+        }
+    }
 }
