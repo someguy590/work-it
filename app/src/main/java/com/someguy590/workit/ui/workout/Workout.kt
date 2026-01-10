@@ -65,7 +65,8 @@ private fun WorkoutContent(
     ) {
         itemsIndexed(workoutState.workouts, { i, workout -> workout.id }) { i, workout ->
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
             ) {
                 if (workoutState.isInEditMode) {
                     OutlinedIconButton({ handleDeleteWorkout(i) }) {
