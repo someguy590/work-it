@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
@@ -19,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -99,6 +101,26 @@ private fun WorkoutContent(
                                 workout.weight.toString(),
                                 { handleEditWorkout(i, workout.id, workout.name, it.toDouble(), workout.reps) }
                             )
+                        }
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillParentMaxWidth()
+                        ) {
+                            val repsDone = rememberSaveable {
+                                BooleanArray(workout.reps.toInt()) { false }
+                            }
+                            for (rep in 0 until workout.reps.toInt()) {
+                                IconToggleButton(repsDone[rep], {}) {
+                                    Icon(
+                                        painterResource(
+                                            if (repsDone[rep]) R.drawable.check_circle_24px
+                                            else R.drawable.blank_circle_24px
+                                        ),
+                                        "Rep status"
+                                    )
+                                }
+                            }
                         }
                     }
                 }
