@@ -91,7 +91,15 @@ private fun WorkoutContent(
                             Text("Name:")
                             OutlinedTextField(
                                 workout.name,
-                                { handleEditWorkout(i, workout.id, it, workout.weight, workout.reps) }
+                                {
+                                    handleEditWorkout(
+                                        i,
+                                        workout.id,
+                                        it,
+                                        workout.weight,
+                                        workout.reps
+                                    )
+                                }
                             )
                         }
                         Row(
@@ -101,7 +109,15 @@ private fun WorkoutContent(
                             Text("Weight:")
                             OutlinedTextField(
                                 workout.weight.toString(),
-                                { handleEditWorkout(i, workout.id, workout.name, it.toDouble(), workout.reps) }
+                                {
+                                    handleEditWorkout(
+                                        i,
+                                        workout.id,
+                                        workout.name,
+                                        it.toDouble(),
+                                        workout.reps
+                                    )
+                                }
                             )
                         }
                         Row(
