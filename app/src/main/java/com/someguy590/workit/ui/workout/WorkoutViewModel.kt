@@ -4,23 +4,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.someguy590.workit.DB
 import com.someguy590.workit.Workout
+import com.someguy590.workit.utils.NotificationManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class WorkoutViewModel(private val db: DB) : ViewModel() {
+class WorkoutViewModel(
+    private val db: DB,
+    private val nm: NotificationManager
+) : ViewModel() {
     private val workoutState = MutableStateFlow(WorkoutState())
     val workoutUIState = workoutState.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            workoutState.update {
+            val state = workoutState.updateAndGet {
                 it.copy(workouts = db.workoutQueries.selectAll().executeAsList())
             }
+            if (state.workouts.isNotEmpty())
+                nm.exerciseNotification(state.workouts[0])
         }
     }
 
