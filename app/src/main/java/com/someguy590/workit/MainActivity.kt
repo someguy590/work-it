@@ -10,12 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.someguy590.workit.ui.theme.WorkItTheme
 import com.someguy590.workit.ui.workout.WorkoutScreen
-import com.someguy590.workit.utils.createNotificationChannel
+import com.someguy590.workit.utils.NotificationManager
+import org.koin.mp.KoinPlatform
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        createNotificationChannel()
+        val notificationManager = KoinPlatform.getKoin().get<NotificationManager>()
+        notificationManager.createNotificationChannel()
 
         enableEdgeToEdge()
         setContent {
