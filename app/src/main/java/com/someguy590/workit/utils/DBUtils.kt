@@ -23,6 +23,19 @@ private val migration2 = AfterVersion(2) { driver ->
     driver.execute(
         null,
         """
+            CREATE TABLE Workout_temp (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            weight REAL NOT NULL,
+            sets INTEGER NOT NULL
+            );
+        """.trimIndent(),
+        0
+    )
+
+    driver.execute(
+        null,
+        """
                         INSERT INTO Workout_temp (id, name, weight, sets)
                         SELECT id, name, weight, reps
                         FROM Workout;
