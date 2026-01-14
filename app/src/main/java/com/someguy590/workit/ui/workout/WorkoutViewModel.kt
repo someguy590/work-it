@@ -36,14 +36,14 @@ class WorkoutViewModel(private val db: DB) : ViewModel() {
         }
     }
 
-    fun editWorkout(i: Int, id: Long, name: String, weight: String, reps: Long) {
+    fun editWorkout(i: Int, id: Long, name: String, weight: String, sets: Long) {
         workoutState.update {
-            val workout = Workout(id, name, weight, reps)
+            val workout = Workout(id, name, weight, sets)
             viewModelScope.launch(Dispatchers.IO) {
                 db.workoutQueries.update(workout.name, workout.weight, workout.sets, workout.id)
             }
             val workouts = it.workouts.toMutableList()
-            workouts[i] = Workout(id, name, weight, reps)
+            workouts[i] = Workout(id, name, weight, sets)
             it.copy(workouts = workouts)
         }
     }
