@@ -40,7 +40,7 @@ class WorkoutViewModel(private val db: DB) : ViewModel() {
         workoutState.update {
             val workout = Workout(id, name, weight, reps)
             viewModelScope.launch(Dispatchers.IO) {
-                db.workoutQueries.update(workout.name, workout.weight, workout.reps, workout.id)
+                db.workoutQueries.update(workout.name, workout.weight, workout.sets, workout.id)
             }
             val workouts = it.workouts.toMutableList()
             workouts[i] = Workout(id, name, weight, reps)
