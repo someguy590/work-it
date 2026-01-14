@@ -125,17 +125,17 @@ private fun WorkoutContent(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillParentMaxWidth()
                         ) {
-                            val repsDone = rememberSaveable {
+                            val setsDone = rememberSaveable {
                                 mutableStateListOf(*Array(workout.sets.toInt()) { false })
                             }
-                            for ((i, isRepDone) in repsDone.withIndex()) {
-                                IconToggleButton(isRepDone, { repsDone[i] = it }) {
+                            for ((i, setSetDone) in setsDone.withIndex()) {
+                                IconToggleButton(setSetDone, { setsDone[i] = it }) {
                                     Icon(
                                         painterResource(
-                                            if (isRepDone) R.drawable.check_circle_24px
+                                            if (setSetDone) R.drawable.check_circle_24px
                                             else R.drawable.blank_circle_24px
                                         ),
-                                        "Rep status"
+                                        "Set status"
                                     )
                                 }
                             }
