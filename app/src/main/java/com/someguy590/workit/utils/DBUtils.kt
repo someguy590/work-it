@@ -20,26 +20,29 @@ fun db(context: Context) = DB(
 )
 
 private val migration2 = AfterVersion(2) { driver ->
-        driver.execute(null,
-            """
+    driver.execute(
+        null,
+        """
                         INSERT INTO Workout_temp (id, name, weight, sets)
                         SELECT id, name, weight, reps
                         FROM Workout;
                     """.trimIndent(),
-            0
-        )
+        0
+    )
 
-        driver.execute(null,
-            """
+    driver.execute(
+        null,
+        """
                         DROP TABLE Workout
                     """.trimIndent(),
-            0
-        )
+        0
+    )
 
-        driver.execute(null,
-            """
+    driver.execute(
+        null,
+        """
                         ALTER TABLE Workout_temp RENAME TO Workout
                     """.trimIndent(),
-            0
-        )
-    }
+        0
+    )
+}
