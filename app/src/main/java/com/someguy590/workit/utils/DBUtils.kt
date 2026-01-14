@@ -19,8 +19,7 @@ fun db(context: Context) = DB(
     )
 )
 
-private val migration2 = AfterVersion(2) {
-    AfterVersion(2) { driver ->
+private val migration2 = AfterVersion(2) { driver ->
         driver.execute(null,
             """
                         INSERT INTO Workout_temp (id, name, weight, sets)
@@ -44,4 +43,3 @@ private val migration2 = AfterVersion(2) {
             0
         )
     }
-}
