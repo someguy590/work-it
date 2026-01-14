@@ -27,16 +27,16 @@ class WorkoutViewModel(private val db: DB) : ViewModel() {
     fun addWorkout() {
         val workoutQueries = db.workoutQueries
         viewModelScope.launch(Dispatchers.IO) {
-            workoutQueries.insert("", 0.0, 5)
+            workoutQueries.insert("", "0.0", 5)
             val id = workoutQueries.lastInsertRowId().executeAsOne()
-            val workout = Workout(id, "", 0.0, 5)
+            val workout = Workout(id, "", "0.0", 5)
             workoutState.update {
                 it.copy(workouts = it.workouts + workout)
             }
         }
     }
 
-    fun editWorkout(i: Int, id: Long, name: String, weight: Double, reps: Long) {
+    fun editWorkout(i: Int, id: Long, name: String, weight: String, reps: Long) {
         workoutState.update {
             val workout = Workout(id, name, weight, reps)
             viewModelScope.launch(Dispatchers.IO) {

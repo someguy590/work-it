@@ -1,7 +1,7 @@
 CREATE TABLE Workout (
 id INTEGER PRIMARY KEY,
 name TEXT NOT NULL,
-weight REAL NOT NULL,
+weight TEXT NOT NULL,
 sets INTEGER NOT NULL
 );
 

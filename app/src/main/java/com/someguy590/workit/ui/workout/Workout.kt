@@ -54,7 +54,7 @@ fun WorkoutScreen(
 private fun WorkoutContent(
     workoutState: WorkoutState,
     handleAddWorkout: () -> Unit,
-    handleEditWorkout: (Int, Long, String, Double, Long) -> Unit,
+    handleEditWorkout: (Int, Long, String, String, Long) -> Unit,
     handleToggleEditMode: () -> Unit,
     handleDeleteWorkout: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -108,13 +108,13 @@ private fun WorkoutContent(
                         ) {
                             Text("Weight:")
                             OutlinedTextField(
-                                workout.weight.toString(),
+                                workout.weight,
                                 {
                                     handleEditWorkout(
                                         i,
                                         workout.id,
                                         workout.name,
-                                        it.toDouble(),
+                                        it,
                                         workout.sets
                                     )
                                 }
