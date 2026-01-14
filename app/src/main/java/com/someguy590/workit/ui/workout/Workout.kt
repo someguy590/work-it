@@ -97,7 +97,7 @@ private fun WorkoutContent(
                                         workout.id,
                                         it,
                                         workout.weight,
-                                        workout.reps
+                                        workout.sets
                                     )
                                 }
                             )
@@ -115,7 +115,7 @@ private fun WorkoutContent(
                                         workout.id,
                                         workout.name,
                                         it.toDouble(),
-                                        workout.reps
+                                        workout.sets
                                     )
                                 }
                             )
@@ -126,7 +126,7 @@ private fun WorkoutContent(
                             modifier = Modifier.fillParentMaxWidth()
                         ) {
                             val repsDone = rememberSaveable {
-                                mutableStateListOf(*Array(workout.reps.toInt()) { false })
+                                mutableStateListOf(*Array(workout.sets.toInt()) { false })
                             }
                             for ((i, isRepDone) in repsDone.withIndex()) {
                                 IconToggleButton(isRepDone, { repsDone[i] = it }) {
