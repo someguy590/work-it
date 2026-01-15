@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -120,13 +121,31 @@ private fun WorkoutContent(
                                 }
                             )
                         }
-                        Row(
+                        FlowRow(
                             horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
+                            verticalArrangement = Arrangement.Center,
+                            itemVerticalAlignment = Alignment.CenterVertically,
+                            maxItemsInEachRow = 6,
                             modifier = Modifier.fillParentMaxWidth()
                         ) {
                             val setsDone = rememberSaveable {
                                 mutableStateListOf(*Array(workout.sets.toInt()) { false })
+                            }
+                            if (workoutState.isInEditMode) {
+                                IconButton({
+                                    if (workout.sets - 1 <= 0L)
+                                        return@IconButton
+                                    handleEditWorkout(
+                                        i,
+                                        workout.id,
+                                        workout.name,
+                                        workout.weight,
+                                        workout.sets - 1
+                                    )
+                                    setsDone.removeAt(setsDone.lastIndex)
+                                }) {
+                                    Icon(painterResource(R.drawable.remove_24px), "Remove set")
+                                }
                             }
                             for ((i, setSetDone) in setsDone.withIndex()) {
                                 IconToggleButton(setSetDone, { setsDone[i] = it }) {
@@ -137,6 +156,22 @@ private fun WorkoutContent(
                                         ),
                                         "Set status"
                                     )
+                                }
+                            }
+                            if (workoutState.isInEditMode) {
+                                IconButton({
+                                    if (workout.sets + 1 >= 11L)
+                                        return@IconButton
+                                    handleEditWorkout(
+                                        i,
+                                        workout.id,
+                                        workout.name,
+                                        workout.weight,
+                                        workout.sets + 1
+                                    )
+                                    setsDone.add(false)
+                                }) {
+                                    Icon(painterResource(R.drawable.add_2_24px), "Add set")
                                 }
                             }
                         }
