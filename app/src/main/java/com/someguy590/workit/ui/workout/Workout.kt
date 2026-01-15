@@ -142,6 +142,7 @@ private fun WorkoutContent(
                                         workout.weight,
                                         workout.sets - 1
                                     )
+                                    setsDone.removeAt(setsDone.lastIndex)
                                 }) {
                                     Icon(painterResource(R.drawable.remove_24px), "Remove set")
                                 }
@@ -168,6 +169,7 @@ private fun WorkoutContent(
                                         workout.weight,
                                         workout.sets + 1
                                     )
+                                    setsDone.add(false)
                                 }) {
                                     Icon(painterResource(R.drawable.add_2_24px), "Add set")
                                 }
